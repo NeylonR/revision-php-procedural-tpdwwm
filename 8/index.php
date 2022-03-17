@@ -1,7 +1,3 @@
-<?php
-    require '../8/_viewLines.php';
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercice 8</title>
 </head>
-
+<?php require '../_navbar.php';?>
 <body>
     <h1>Exercice 8 : Affichage des données de la BDD</h1>
     <p>A partir de la connexion réalisée à l'exercice 6 et des apprentissages des exercices précédents, affichez
@@ -22,6 +18,35 @@
         d'avoir un tableau doublé.</small>
     <p><b>Bonus : ajoutez un champ de recherche pour filtrer les résultats par leur nom (A l'aide de l'instruction LIKE
             %recherche% dans une requête SQL)</b></p>
+
+    <form method="POST" action="index.php">
+        <input type="text" name="search" id="search" placeholder="Recherche par nom de ligne.">
+        <button type="submit">Rechercher</button>
+    </form>
+    <?php 
+    require '../getMessage.php';
+    if($alert){?>
+    <h4 class="<?= $type ?>"><?= $message ?></h4>
+    <?php } ?>
+
+    <table>
+        <thead>
+            <tr>
+               <th>Nom de la ligne</th>
+               <th>Ligne de départ</th>
+               <th>Ligne d'arrivé</th>
+               <th colspan="2">Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php if(isset($_POST['search'])){
+                    require 'search_post.php';
+                    }else{
+                        require '../displayTable.php';
+                    } ?>
+            <?php ;?>
+        </tbody>
+    </table>
 </body>
 
 </html>

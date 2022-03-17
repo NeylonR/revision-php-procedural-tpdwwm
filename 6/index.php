@@ -8,7 +8,10 @@
     <title>Exercice 6</title>
 
 </head>
-
+<?php 
+require '../config.php';
+require '../_navbar.php';
+?>
 <body>
     <h1>Exercice 6 : Connexion à la BDD</h1>
     <p>A partir de vos connaissances, établissez une connexion à une base de données MySQL. VOUS N'UTILISEREZ PAS DE

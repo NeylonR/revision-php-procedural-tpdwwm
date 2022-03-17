@@ -9,7 +9,7 @@
 
 
 </head>
-
+<?php require '../_navbar.php' ?>
 <body>
     <h1>Exercice 10 : Suppression simple de la BDD</h1>
     <p>A partir de la connexion réalisée à l'exercice 6 et des apprentissages des exercices précédents, utilisez un

@@ -8,7 +8,7 @@
     <title>Exercice 5</title>
 
 </head>
-
+<?php require '../_navbar.php'; ?>
 <body>
     <h1>Exercice 5 : Messages d'erreur via requête GET</h1>
     <p>A l'aide de manipulation des requêtes GET, créez un système d'alerte qui se base sur les requêtes reçues dans

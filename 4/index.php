@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exercice 4</title>
 </head>
-
+<?php require '../_navbar.php'; ?>
 <body>
     <h1>Exercice 4 : Templating</h1>
     <p>A l'aide d'instructions d'inclusion de fichiers (comprendre require/include), créez un système de templating qui
@@ -16,5 +16,5 @@
         dorénavant.</p>
     <small>Ne pas oublier les conventions de nommage de fragments de page. </small>
 </body>
-
+<?php require '../_footer.php' ?>
 </html>
