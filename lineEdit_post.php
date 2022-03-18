@@ -23,21 +23,21 @@ if(isset($_POST) && !empty($_POST)){
             exit();
         }
 
-        try{
-            $sqlSelectLabel = "SELECT nom FROM lignes WHERE nom = :nom";
-            $reqSelectLabel = $db->prepare($sqlSelectLabel);
-            $reqSelectLabel->execute(array(
-                'nom'=>$lineName
-            ));
-            $resultFetchLineName = $reqSelectLabel->fetch();
-        }catch(PDOException $e){
-            echo 'erreur : '.$e;
-        }
+        // try{
+        //     $sqlSelectLabel = "SELECT nom FROM lignes WHERE nom = :nom";
+        //     $reqSelectLabel = $db->prepare($sqlSelectLabel);
+        //     $reqSelectLabel->execute(array(
+        //         'nom'=>$lineName
+        //     ));
+        //     $resultFetchLineName = $reqSelectLabel->fetch();
+        // }catch(PDOException $e){
+        //     echo 'erreur : '.$e;
+        // }
 
-        if($resultFetchLineName){
-            header('location:8/lineEdit.php?error=dupeLine&id='.$lineId.'');
-            exit(); 
-        }
+        // if($resultFetchLineName){
+        //     header('location:8/lineEdit.php?error=dupeLine&id='.$lineId.'');
+        //     exit(); 
+        // }
 
         try{
             $sqlSelectLabel = "SELECT * FROM type WHERE label = :label";
