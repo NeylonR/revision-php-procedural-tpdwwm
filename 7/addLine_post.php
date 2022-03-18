@@ -1,16 +1,9 @@
 <?php
 require '../config.php';
-try{
-    $sqlSelect = 'SELECT * FROM lignes';
-    $reqSelect = $db->query($sqlSelect);
-    $fetchAll = $reqSelect->fetchAll();
-}catch(PDOException $e){
-    echo 'erreur : '.$e;
-}
-
 if(isset($_POST) && !empty($_POST)){
     if(in_array('', $_POST)){
         header('location:index.php?error=empty');
+        exit();
     }else{
         $lineName = trim(htmlspecialchars($_POST['lineName']));
         $terminus_a = trim(htmlspecialchars($_POST['terminus_a']));
@@ -29,11 +22,20 @@ if(isset($_POST) && !empty($_POST)){
             exit();
         }
 
-        foreach($fetchAll as $line){
-            if(strtolower($line['nom']) == strtolower($lineName)){
-                header('location:index.php?error=dupeLine');
-                exit(); 
-            }
+        try{
+            $sqlSelectLabel = "SELECT nom FROM lignes WHERE nom = :nom";
+            $reqSelectLabel = $db->prepare($sqlSelectLabel);
+            $reqSelectLabel->execute(array(
+                'nom'=>$lineName
+            ));
+            $resultFetchLineName = $reqSelectLabel->fetch();
+        }catch(PDOException $e){
+            echo 'erreur : '.$e;
+        }
+
+        if($resultFetchLineName){
+            header('location:index.php?error=dupeLine&id='.$lineId.'');
+            exit(); 
         }
 
         try{
