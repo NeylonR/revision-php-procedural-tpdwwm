@@ -24,13 +24,13 @@ if(isset($_POST) && !empty($_POST)){
         }
 
         try{
-            $sqlSelectLabel = "SELECT nom FROM lignes WHERE nom = :nom AND id != :id";
-            $reqSelectLabel = $db->prepare($sqlSelectLabel);
-            $reqSelectLabel->execute(array(
+            $sqlSelectVerif = "SELECT nom FROM lignes WHERE nom = :nom AND id != :id";
+            $reqSelectVerif = $db->prepare($sqlSelectVerif);
+            $reqSelectVerif->execute(array(
                 'nom'=>$lineName,
                 'id'=>$lineId
             ));
-            $resultFetchLineName = $reqSelectLabel->fetch();
+            $resultFetchLineName = $reqSelectVerif->fetch();
         }catch(PDOException $e){
             echo 'erreur : '.$e;
         }
