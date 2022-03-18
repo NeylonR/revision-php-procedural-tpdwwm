@@ -17,6 +17,7 @@
     <small>Utilisez un système de bloc try/catch afin de réaliser vos opérations SQL.Sécurisez le tout avec des requêtes
         préparées.N'oubliez pas l'instruction WHERE sous peine de tout modifier</small>
     <p><b>Bonus : Ajoutez des messages d'erreur sur la page pour renforcer l'expérience utilisateur</b></p>
+    <a href="../8/index.php">Retour exo 8</a>
 </body>
 
 </html>

@@ -15,7 +15,7 @@ if(isset($_POST) && !empty($_POST)){
         $lineName = trim(htmlspecialchars($_POST['lineName']));
         $terminus_a = trim(htmlspecialchars($_POST['terminus_a']));
         $terminus_b = trim(htmlspecialchars($_POST['terminus_b']));
-
+        $typeLabel = trim(htmlspecialchars($_POST['type']));
         if(strlen($lineName) > 255){
             header('location:index.php?error=lineNameLength');
             exit();
@@ -37,12 +37,29 @@ if(isset($_POST) && !empty($_POST)){
         }
 
         try{
-            $sql = "INSERT INTO lignes (nom, terminus_a, terminus_b) VALUES (:nom, :terminus_a, :terminus_b)";
+            $sqlSelectLabel = "SELECT * FROM type WHERE label = :label";
+            $reqSelectLabel = $db->prepare($sqlSelectLabel);
+            $reqSelectLabel->execute(array(
+                'label'=>$typeLabel
+            ));
+            $resultLabel = $reqSelectLabel->fetch();
+        }catch(PDOException $e){
+            echo 'erreur : '.$e;
+        }
+
+        if(!$resultLabel){
+            header('location:index.php?error=type');
+            exit();
+        }
+
+        try{
+            $sql = "INSERT INTO lignes (nom, terminus_a, terminus_b, type_transport_id) VALUES (:nom, :terminus_a, :terminus_b, :type_transport_id)";
             $req = $db->prepare($sql);
             $req->execute(array(
                 'nom'=>$lineName,
                 'terminus_a'=>$terminus_a,
-                'terminus_b'=>$terminus_b
+                'terminus_b'=>$terminus_b,
+                'type_transport_id'=>$resultLabel['type_id']
             ));
             header('location:index.php?success=lineAdded');
             exit();

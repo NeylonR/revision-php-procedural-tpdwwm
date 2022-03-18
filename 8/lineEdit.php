@@ -4,12 +4,23 @@ require '../config.php';
 $lineId = intval(htmlspecialchars($_GET['id']));
 
 try{
-    $sqlSelect = 'SELECT * FROM lignes WHERE id = :id';
+    $sqlSelect = 'SELECT * FROM lignes INNER JOIN type ON lignes.type_transport_id = type.type_id WHERE id = :id';
     $reqSelect = $db->prepare($sqlSelect);
     $reqSelect->execute(array(
         'id'=>$lineId
     ));
     $fetch = $reqSelect->fetch();
+}catch(PDOException $e){
+    echo 'erreur : '.$e;
+}
+
+try{
+    $sqlSelectLabel = "SELECT * FROM type WHERE label != :label";
+    $reqSelectLabel = $db->prepare($sqlSelectLabel);
+    $reqSelectLabel->execute(array(
+        'label'=>$fetch['label']
+    ));
+    $resultLabel = $reqSelectLabel->fetchAll();
 }catch(PDOException $e){
     echo 'erreur : '.$e;
 }
@@ -29,6 +40,12 @@ try{
 
     <label for="terminus_b">Ligne d'arrivée</label>
     <input required type="text" name="terminus_b" id="terminus_b" value="<?= $fetch['terminus_b']?>">
+
+    <label for="type">Type de transport</label>
+        <select name="type" id="type" required>
+            <option value="<?= $fetch['label']?>"><?= $fetch['label']?></option>
+            <?php displayTypeSelect($resultLabel);?>
+        </select>
 
     <button type="submit">Modifier</button>
 </form>

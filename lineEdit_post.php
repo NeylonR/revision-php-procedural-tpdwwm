@@ -8,7 +8,7 @@ if(isset($_POST) && !empty($_POST)){
         $terminus_a = htmlspecialchars($_POST['terminus_a']);
         $terminus_b = htmlspecialchars($_POST['terminus_b']);
         $lineName = htmlspecialchars($_POST['lineName']);
-
+        $lineType = htmlspecialchars($_POST['type']);
         if(strlen($lineName) > 255){
             header('location:8/lineEdit.php?error=lineNameLength&id='.$lineId.'');
             exit();
@@ -30,13 +30,25 @@ if(isset($_POST) && !empty($_POST)){
         }
 
         try{
-            $sqlUpdate = 'UPDATE lignes SET nom = :nom, terminus_a = :terminus_a, terminus_b = :terminus_b WHERE id = :id';
+            $sqlSelectLabel = "SELECT * FROM type WHERE label = :label";
+            $reqSelectLabel = $db->prepare($sqlSelectLabel);
+            $reqSelectLabel->execute(array(
+                'label'=>$lineType
+            ));
+            $resultLabel = $reqSelectLabel->fetch();
+        }catch(PDOException $e){
+            echo 'erreur : '.$e;
+        }
+
+        try{
+            $sqlUpdate = 'UPDATE lignes SET nom = :nom, terminus_a = :terminus_a, terminus_b = :terminus_b, type_transport_id = :type_transport_id WHERE id = :id';
             $reqUpdate = $db->prepare($sqlUpdate);
             $reqUpdate->execute(array(
                 'nom'=>$lineName,
                 'id'=>$lineId,
                 'terminus_a'=>$terminus_a,
-                'terminus_b'=>$terminus_b
+                'terminus_b'=>$terminus_b,
+                'type_transport_id'=>$resultLabel['type_id']
             ));
             header('location:8/index.php?success=modification');
             exit();

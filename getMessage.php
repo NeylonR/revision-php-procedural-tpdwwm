@@ -21,6 +21,8 @@ $alert=false;
         $message= "Erreur inconnu, contactez un membre de l'équipe.";
     } else if($_GET['error'] == 'dupeLine'){
         $message= "La ligne que vous essayez de créer éxiste déjà.";
+    } else if($_GET['error'] == 'type'){
+        $message= "Erreur avec le choix du type de transport.";
     }
 }
 if(isset($_GET['success'])){

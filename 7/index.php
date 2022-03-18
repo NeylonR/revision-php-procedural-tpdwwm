@@ -23,17 +23,30 @@ require '../config.php'; ?>
     require '../getMessage.php';
     if($alert){?>
     <h4 class="<?= $type ?>"><?= $message ?></h4>
-    <?php } ?>
+    <?php } 
+    try{
+        $sqlSelectLabel = "SELECT * FROM type";
+        $reqSelectLabel = $db->query($sqlSelectLabel);
+        $resultLabel = $reqSelectLabel->fetchAll();
+    }catch(PDOException $e){
+        echo 'erreur : '.$e;
+    }?>
     
     <form action="addLine_post.php" method="POST">
         <label for="lineName">Nom de la ligne</label>
-        <input type="text" name="lineName" id="lineName" maxlength="255" >
+        <input type="text" name="lineName" id="lineName" maxlength="255" required>
 
         <label for="terminus_a">Départ</label>
         <input type="text" name="terminus_a" id="terminus_a" maxlength="255" required>
 
         <label for="terminus_b">Arrivée</label>
         <input type="text" name="terminus_b" id="terminus_b" maxlength="255" required>
+
+        <label for="type">Type de transport</label>
+        <select name="type" id="type" required>
+            <option value="">--Choisir un type de transport--</option>
+            <?php displayTypeSelect($resultLabel);?>
+        </select>
 
         <button>Envoyer.</button>
     </form>
