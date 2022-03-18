@@ -34,7 +34,7 @@ if(isset($_POST) && !empty($_POST)){
         }
 
         if($resultFetchLineName){
-            header('location:index.php?error=dupeLine&id='.$lineId.'');
+            header('location:index.php?error=dupeLine');
             exit(); 
         }
 
