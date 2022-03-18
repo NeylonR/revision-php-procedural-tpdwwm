@@ -8,7 +8,6 @@ try{
     $reqSelect->execute(array(
         'id'=>$lineId
     ));
-    $fetch = $reqSelect->fetch();
 }catch(PDOException $e){
     echo 'erreur : '.$e;
 }
